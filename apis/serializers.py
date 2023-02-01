@@ -2,6 +2,7 @@ from rest_framework import serializers
 from core.models import Student, School
 import random
 import string
+from auditlog.models import LogEntry
 
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,8 +20,8 @@ class StudentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('The selected school is full')
         return data
 
-    # def create(self, validated_data):
-    #     student_id = ''.join(random.choices(string.ascii_letters + string.digits, k=20))
-    #     validated_data['student_id'] = student_id
-    #     return super().create(validated_data)
+class LogEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LogEntry
+        fields = '__all__'
     
