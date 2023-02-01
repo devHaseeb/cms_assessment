@@ -10,7 +10,6 @@ class SchoolSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class StudentSerializer(serializers.ModelSerializer):
-    school = SchoolSerializer()
     class Meta:
         model = Student
         fields = ['id', 'uuid', 'first_name', 'last_name', 'nationality', 'age', 'location', 'student_id', 'school','created_at','updated_at']

@@ -22,3 +22,13 @@ installations and setup: 30mins
 apache configuration and dns : 10mins
 
 Project is live at https://haseebraza.com
+
+
+Endpoints 
+/api/students
+/api/students/:id
+
+/api/schools
+/api/schools/:id
+
+/api/schools/:id/students
