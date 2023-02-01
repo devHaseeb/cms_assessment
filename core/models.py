@@ -9,6 +9,8 @@ class School(models.Model):
     name = models.CharField(max_length=20)
     location = models.CharField(max_length=100)
     max_students = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     history = AuditlogHistoryField()
 
     def __str__(self):
@@ -23,6 +25,8 @@ class Student(models.Model):
     location = models.CharField(max_length=100)
     student_id = models.CharField(max_length=20, unique=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     history = AuditlogHistoryField()
 
     def __str__(self):
