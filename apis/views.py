@@ -11,6 +11,20 @@ import json
 class SchoolViewSet(viewsets.ModelViewSet):
     queryset = School.objects.all()
     serializer_class = SchoolSerializer
+    
+    def get_queryset(self):
+        name = self.request.query_params.get('name', None)
+        location = self.request.query_params.get('location', None)
+        max_students = self.request.query_params.get('max_students', None)
+        
+        queryset = self.queryset
+        if name is not None:
+            queryset = queryset.filter(name__iexact=name)
+        if location is not None:
+            queryset = queryset.filter(location__iexact=location)
+        if max_students is not None:
+            queryset = queryset.filter(max_students__gt=max_students)
+        return queryset
 
 
 class StudentViewSet(viewsets.ModelViewSet):
@@ -33,11 +47,12 @@ class StudentViewSet(viewsets.ModelViewSet):
         if student_id is not None:
             queryset = queryset.filter(student_id__iexact=student_id)
         return queryset
+    
+    def list(self, request, school_pk=None):
+        queryset = self.queryset.filter(school_id=school_pk)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
-    # def get_serializer_context(self):
-    #     context = super().get_serializer_context()
-    #     context['request'] = self.request
-    #     return context
 
 class LogEntryViewSet(viewsets.ModelViewSet):
     queryset = LogEntry.objects.all()
